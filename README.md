@@ -9,17 +9,17 @@ Ce projet a pour but de créer une base de données permettant de stocker des in
 
 1. Cloner le repository sur votre machine.
 
-    https://github.com/VincentPRV/projet_E1.git
+    `https://github.com/VincentPRV/projet_E1.git`
 
 2. Naviguez jusqu'au dossier du projet
 
 3. Installez les dépendances avec la commande suivante :
 
-    pip install -r requirements.txt
+    `pip install -r requirements.txt`
 
 4. Créez une base de données SQLite avec la commande suivante :
 
-    python create_db.py
+    `python create_db.py`
 
 Ce script va créer une base de données nommée projet_E1.db et y créer les tables nécessaires en exécutant le code SQL du fichier projet.sql.
 
@@ -39,7 +39,7 @@ Ce script va créer une base de données nommée projet_E1.db et y créer les ta
 
 Pour se connecter à la base de données. Il suffit d'exécuter la commande suivante :
 
-    sqlite3 projet_E1.db
+    `sqlite3 projet_E1.db`
 
 
 
@@ -47,7 +47,7 @@ Pour se connecter à la base de données. Il suffit d'exécuter la commande suiv
 
 Une fois connecté, vous pouvez voir les tables présentes dans la base de données avec la commande suivante :
 
-.tables
+`.tables`
 
 
 
@@ -55,7 +55,7 @@ Une fois connecté, vous pouvez voir les tables présentes dans la base de donn�
 
 Pour afficher le contenu d'une table, utilisez la commande suivante en remplaçant `nom_table` par le nom de la table souhaitée :
 
-SELECT * FROM nom_table;
+`SELECT * FROM nom_table;`
 
 
 
@@ -63,11 +63,11 @@ SELECT * FROM nom_table;
 
 La requête suivante permet de récupérer toutes les informations liées à un auteur, y compris les informations sur ses oeuvres et leur localisation :
 
-SELECT auteurs.nom AS auteur, oeuvres.domaine, localisations.ville, localisations.region, localisations.base 
+`SELECT auteurs.nom AS auteur, oeuvres.domaine, localisations.ville, localisations.region, localisations.base 
 FROM auteurs 
 JOIN oeuvres ON auteurs.auteurid = oeuvres.auteurid 
 JOIN localisations ON oeuvres.villeid = localisations.villeid 
-WHERE auteurs.auteurid = ???;
+WHERE auteurs.auteurid = ???;`
 
 
 ## Auteurs
