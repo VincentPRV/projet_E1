@@ -72,4 +72,4 @@ WHERE auteurs.auteurid = ???;`
 
 ## Auteurs
 
-- Vincent Prévot
+Vincent Prévot
