@@ -18,4 +18,6 @@ CREATE TABLE IF NOT EXISTS oeuvres(
     auteurid INTEGER NOT NULL, 
     FOREIGN KEY(auteurid) REFERENCES auteurs(auteurid),
     FOREIGN KEY (villeid) REFERENCES localisations(villeid)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
 );
