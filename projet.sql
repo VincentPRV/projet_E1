@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS auteurs(
 
 CREATE TABLE IF NOT EXISTS oeuvres(
     oeuvreid    INTEGER PRIMARY KEY,
-    villeid    INTEGER,
+    villeid    INTEGER UNIQUE,
     domaine     VARCHAR(255),
     auteurid INTEGER NOT NULL, 
     FOREIGN KEY(auteurid) REFERENCES auteurs(auteurid),

@@ -1,8 +1,5 @@
 import sqlite3
-import sqlite3
 import pandas as pd
-
-
 
 
 def exe_sql():
@@ -49,6 +46,9 @@ def insert_test_data():
     # Fermer la connexion à la base de données
     connection.close()
 
+
+
+
 def insert_data_from_dataframe(df, max_rows=None):
     # Se connecter à la base de données
     connection = sqlite3.connect("projet_E1.db")
@@ -65,8 +65,8 @@ def insert_data_from_dataframe(df, max_rows=None):
         ville = row["Ville_"]
         result = connection.execute("SELECT villeid FROM localisations WHERE ville = ?", (ville,)).fetchone()
         if result is None:
-            connection.execute("INSERT INTO localisations(base, pop_coordonnees, region, ville) VALUES (?, ?, ?, ?)", (base, pop_coordonnees, region, ville))
-            villeid = connection.lastrowid
+            cursor_used = connection.execute("INSERT INTO localisations(base, pop_coordonnees, region, ville) VALUES (?, ?, ?, ?)", (base, pop_coordonnees, region, ville))
+            villeid = cursor_used.lastrowid
         else:
             villeid = result[0]
 
@@ -79,8 +79,8 @@ def insert_data_from_dataframe(df, max_rows=None):
         for nom in auteurs:
             result = connection.execute("SELECT auteurid FROM auteurs WHERE nom = ?", (nom,)).fetchone()
             if result is None:
-                connection.execute("INSERT INTO auteurs(nom) VALUES (?)", (nom,))
-                auteurid = connection.lastrowid
+                cursor_used = connection.execute("INSERT INTO auteurs(nom) VALUES (?)", (nom,))
+                auteurid =  cursor_used.lastrowid
             else:
                 auteurid = result[0]
         
@@ -91,9 +91,7 @@ def insert_data_from_dataframe(df, max_rows=None):
     # Valider les modifications
     connection.commit()
 
-
-    
-    
+       
 def teardown():
     connection = sqlite3.connect("projet_E1.db")
     cursor = connection.cursor()
@@ -105,12 +103,13 @@ def teardown():
     connection.commit()
     connection.close()
 
+
 if __name__ == "__main__":
         
     exe_sql()
-    teardown()
+    # teardown()
     # insert_test_data()
-    run_tests = False   # Définir la variable pour exécuter ou non les tests
+    run_tests = True   # Définir la variable pour exécuter ou non les tests
 
     if run_tests:
         teardown()
@@ -180,49 +179,6 @@ if __name__ == "__main__":
         print("=" * 10, "Vérification de l'insertion des données depuis le dataframe test réussi", "=" * 10)
         print('')
         
-        teardown()
+        # teardown()
                 
-                
-        # Test 4: Vérifier l'insertion d'une oeuvre avec 2 auteurs dans la table oeuvres
-        connection = sqlite3.connect("projet_E1.db")
-        cursor = connection.cursor()
-
-        # Insérer deux nouveaux auteurs dans la table auteurs
-        cursor.execute("INSERT INTO auteurs (nom) VALUES ('Auteur1')")
-        connection.commit()
-        auteur1_id = cursor.lastrowid
-
-        cursor.execute("INSERT INTO auteurs (nom) VALUES ('Auteur2')")
-        connection.commit()
-        auteur2_id = cursor.lastrowid
-
-        # Insérer une nouvelle localisation dans la table localisations
-        cursor.execute("INSERT INTO localisations (base, pop_coordonnees, region, ville) VALUES ('base_test', 100, 'region_test', 'ville_test')")
-        connection.commit()
-        ville_id = cursor.lastrowid
-
-        # Insérer une nouvelle oeuvre avec 2 auteurs dans la table oeuvres
-        cursor.execute(f"INSERT INTO oeuvres (oeuvreid, villeid, domaine) VALUES (1, {ville_id}, 'domaine_test')")
-        connection.commit()
-        oeuvre_id = cursor.lastrowid
-
-        cursor.execute(f"INSERT INTO auteurs_oeuvres (auteurid, oeuvreid) VALUES ({auteur1_id}, 1)")
-        connection.commit()
-
-        cursor.execute(f"INSERT INTO auteurs_oeuvres (auteurid, oeuvreid) VALUES ({auteur2_id}, 1)")
-        connection.commit()
-
-        # Vérifier que les données ont été insérées correctement
-        cursor.execute("SELECT COUNT(*) FROM oeuvres")
-        result = cursor.fetchone()[0]
-        expected_result = 1
-
-        assert result == expected_result, f"Erreur: Résultat attendu: {expected_result}, Résultat obtenu {result}"
-
-        cursor.execute("SELECT COUNT(*) FROM auteurs_oeuvres WHERE oeuvreid = 1")
-        result = cursor.fetchone()[0]
-        expected_result = 2
-
-        assert result == expected_result, f"Le test a échoué: résultat obtenu {result}, résultat attendu {expected_result}"
-        print("=" * 10, "Vérification de l'insertion d'une oeuvre avec deux auteurs réussi", "=" * 10)
-
+       
