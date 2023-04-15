@@ -48,7 +48,6 @@ def insert_test_data():
 
 
 
-
 def insert_data_from_dataframe(df, max_rows=None):
     # Se connecter à la base de données
     connection = sqlite3.connect("projet_E1.db")
@@ -107,9 +106,8 @@ def teardown():
 if __name__ == "__main__":
         
     exe_sql()
-    # teardown()
-    # insert_test_data()
-    run_tests = True   # Définir la variable pour exécuter ou non les tests
+ 
+    run_tests = False   # Définir la variable pour exécuter ou non les tests
 
     if run_tests:
         teardown()
